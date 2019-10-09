@@ -9,7 +9,7 @@ const router = express.Router();
  * Get All Users
  */
 router.get('',
-userController.getAllUser);
+    userController.getAllUser);
 
 
 /**
@@ -30,5 +30,21 @@ router.post('',
     // eslint-disable-next-line @typescript-eslint/camelcase
     sanitize('email').normalizeEmail({ gmail_remove_dots: true })],
     userController.createUser);
+
+/**
+ * Update User
+ */
+router.put('/:id',
+    [check('id').exists().trim(),
+    body().custom(isJsonValid(userJsonSchema)),
+    check('email', 'Please enter a valid email address.').trim().isEmail(),
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    sanitize('email').normalizeEmail({ gmail_remove_dots: true })],
+    userController.updateUserById);
+
+
+router.delete('/:id',
+    check('id').exists().trim(),
+    userController.deleteUserById);
 
 export { router as userRouter };
