@@ -11,7 +11,7 @@ export class UserController {
     getAllUser(req: Request, res: Response) {
         UserSchema.find((err: any, users: User[]) => {
             if (err) {
-                res.status(403).json(err);
+                res.status(404).json(err);
             } else {
                 res.json(users);
             }
@@ -22,7 +22,7 @@ export class UserController {
         const userId = matchedData(req).id;
         UserSchema.findById(userId, (err: any, user: User) => {
             if (err) {
-                res.status(403).json(err);
+                res.status(404).json(err);
             } else {
                 res.json(user);
             }
@@ -39,6 +39,21 @@ export class UserController {
 
         userModel.save()
             .then((createdUser) => res.json(createdUser))
+            .catch((err: any) => res.status(500).json(err));
+    }
+
+    updateUserById(req: Request, res: Response) {
+        const userId = matchedData(req).id;
+        const newUser: User = matchedData(req)[''];
+        UserSchema.findByIdAndUpdate(userId, newUser)
+            .then(() => res.json('Update Successfully'))
+            .catch((err: any) => res.status(500).json(err || 'Failed to update'));
+    }
+
+    deleteUserById(req: Request, res: Response) {
+        const userId = matchedData(req).id;
+        UserSchema.findByIdAndDelete(userId)
+            .then((updatedUser) => res.json(updatedUser))
             .catch((err: any) => res.status(500).json(err));
     }
 
