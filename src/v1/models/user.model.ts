@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
 import { Schema } from 'jsonschema';
 
-export interface User {
+export interface User extends mongoose.Document {
   firstName: string;
   lastName: string;
   email: string;
@@ -55,4 +55,4 @@ export let userJsonSchema: Schema = {
 
 
 
-export default mongoose.model('User', UserSchema);
+export default mongoose.model<User>('User', UserSchema);
