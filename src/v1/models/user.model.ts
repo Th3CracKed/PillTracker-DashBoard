@@ -5,6 +5,7 @@ export interface User extends mongoose.Document {
   firstName: string;
   lastName: string;
   email: string;
+  points: number;
 }
 
 const UserSchema = new mongoose.Schema(
@@ -26,6 +27,10 @@ const UserSchema = new mongoose.Schema(
       required: true,
       trim: true,
       lowercase: true
+    },
+    points: {
+      type: Number,
+      required: true
     }
   },
   {

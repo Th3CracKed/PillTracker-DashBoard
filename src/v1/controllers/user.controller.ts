@@ -28,7 +28,7 @@ export class UserController {
 
     createUser(req: Request, res: Response) {
         try {
-            const user: User = new UserSchema(matchedData(req)['']);
+            const user: User = new UserSchema({ ...matchedData(req)[''], ...{ points: 0 } });
             user.save()
                 .then((createdUser) => res.json(createdUser))
                 .catch((err: any) => res.status(500).json(err));
