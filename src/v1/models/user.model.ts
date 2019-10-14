@@ -1,11 +1,13 @@
 import * as mongoose from 'mongoose';
 import { Schema } from 'jsonschema';
+import { ObjectId } from 'mongodb';
 
-export interface User extends mongoose.Document {
+export interface User {
   firstName: string;
   lastName: string;
   email: string;
   points: number;
+  orders?: ObjectId[];
 }
 
 const UserSchema = new mongoose.Schema(
@@ -30,8 +32,10 @@ const UserSchema = new mongoose.Schema(
     },
     points: {
       type: Number,
-      required: true
-    }
+      required: true,
+      default: 0
+    },
+    orders: [{ type: ObjectId, ref: 'Order'}]
   },
   {
     timestamps: true,
@@ -51,13 +55,23 @@ export let userJsonSchema: Schema = {
     },
     email: {
       'type': 'string'
+    },
+    orders: {
+      'type': 'array',
+      'items': {
+        'type': 'string'
+      }
     }
   },
-  required: ['firstName', 'lastName', 'email'],
+  required: ['email'],
   additionalProperties: false
+};
+
+export let requiredForCreation: Schema = {
+  id: '/UserJsonSchemaRequired',
+  required: ['firstName', 'lastName']
 };
 
 
 
-
-export default mongoose.model<User>('User', UserSchema);
+export default mongoose.model('User', UserSchema);

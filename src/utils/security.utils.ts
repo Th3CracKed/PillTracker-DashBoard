@@ -17,10 +17,22 @@ export const isJsonValid = (schema: Schema, ...refSchema: Schema[]) => {
 };
 
 /**
- * catch errors for async functions
+ * Create new schema that validate an array of the passed schema
+ * @param item The schema to build an array for
+ */
+export let arraySchema = (item: Schema): Schema => {
+  return {
+    id: '/array_' + item.id,
+    type: 'array',
+    items: { $ref: item.id }
+  };
+};
+
+/**
+ * catch errors for functions
  * @param fn async function to validate
  */
-export const wrapAsync = (fn: Function) => {
+export const validateFn = (fn: Function) => {
   return (req: Request, res: Response, next: NextFunction) => {
     // Extracts the validation errors from a request and makes them available in a Result object.
     const errors = validationResult(req);
@@ -28,6 +40,6 @@ export const wrapAsync = (fn: Function) => {
       return res.status(422).json({ errors: errors.mapped() });
     }
     // Make sure to `.catch()` any errors and pass them along to the `next()`
-    fn(req, res, next).catch(next);
+    fn(req, res, next);
   };
 };
