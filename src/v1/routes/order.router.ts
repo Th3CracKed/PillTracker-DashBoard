@@ -8,7 +8,7 @@ const router = express.Router();
 /**
  * Get All Orders
  */
-router.get('', [check('populate').optional().isBoolean()],
+router.get('',
     validateFn(orderController.getAllOrder));
 
 /**
