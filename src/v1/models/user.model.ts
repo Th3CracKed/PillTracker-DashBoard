@@ -60,7 +60,8 @@ export let userJsonSchema: Schema = {
       'type': 'array',
       'items': {
         'type': 'string'
-      }
+      },
+      'uniqueItems': true
     }
   },
   required: ['email'],

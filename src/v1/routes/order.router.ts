@@ -2,7 +2,7 @@ import * as express from 'express';
 import { orderController } from '../controllers/order.controller';
 import { body, check } from 'express-validator';
 import { isJsonValid, validateFn } from '../../utils';
-import { orderJsonSchema } from '../models/order.model';
+import { orderJsonSchema, productOrderJsonSchema } from '../models/order.model';
 const router = express.Router();
 
 /**
@@ -23,7 +23,7 @@ router.get('/:id',
  */
 router.post('', [
     body()
-        .custom(isJsonValid(orderJsonSchema))],
+        .custom(isJsonValid(orderJsonSchema, productOrderJsonSchema))],
     validateFn(orderController.createOrder));
 
 /**
@@ -31,7 +31,7 @@ router.post('', [
  */
 router.put('/:id',
     [check('id').exists().trim(),
-    body().custom(isJsonValid(orderJsonSchema))],
+    body().custom(isJsonValid(orderJsonSchema, productOrderJsonSchema))],
     validateFn(orderController.updateOrderById));
 
 /**
