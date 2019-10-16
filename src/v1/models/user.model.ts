@@ -54,14 +54,14 @@ export let userJsonSchema: Schema = {
       type: 'string'
     },
     email: {
-      'type': 'string'
+      type: 'string'
     },
     orders: {
-      'type': 'array',
-      'items': {
-        'type': 'string'
+      type: 'array',
+      items: {
+        type: 'string'
       },
-      'uniqueItems': true
+      uniqueItems: true
     }
   },
   required: ['email'],

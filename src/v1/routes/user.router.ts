@@ -20,7 +20,7 @@ router.get('', [check('populate').optional().isBoolean()],
  */
 router.get('/:id',
     [check('id').exists().trim(),
-    check('populate').optional()],
+    check('populate').optional().isBoolean()],
     userController.getUserById);
 
 
