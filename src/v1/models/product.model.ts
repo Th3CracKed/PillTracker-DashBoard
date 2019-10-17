@@ -6,7 +6,7 @@ export interface Product {
   productName: string;
   series: string;
   description?: string;
-  timeline?: ObjectId | string;
+  timeline: ObjectId | string;
 }
 
 const ProductSchema = new mongoose.Schema(
@@ -45,9 +45,12 @@ export let productJsonSchema: Schema = {
     },
     description: {
       type: 'string'
+    },
+    timeline: {
+      type: 'string'
     }
   },
-  required: ['productName', 'series'],
+  required: ['productName', 'series', 'timeline'],
   additionalProperties: false
 };
 

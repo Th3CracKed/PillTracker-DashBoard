@@ -2,18 +2,21 @@ import { Request, Response } from 'express';
 import { matchedData } from 'express-validator';
 import { Product } from '../models';
 import { productService } from '../services';
+import { isTrueBool } from '../../utils';
 
 export class ProductController {
 
     getAllProduct(req: Request, res: Response) {
-        productService.getAllProduct()
+        const populate: string = matchedData(req).populate;
+        productService.getAllProduct(isTrueBool(populate))
         .then((products) => res.json(products))
         .catch(err => res.status(404).json(err));
     }
 
     getProductById(req: Request, res: Response) {
         const productId: string = matchedData(req).id;
-        productService.getProductById(productId)
+        const populate: string = matchedData(req).populate;
+        productService.getProductById(productId, isTrueBool(populate))
         .then(product => res.json(product))
         .catch(err => res.status(404).json(err));
     }

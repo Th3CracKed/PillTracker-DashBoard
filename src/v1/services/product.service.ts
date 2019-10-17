@@ -3,12 +3,14 @@ import { Product } from '../models';
 
 export class ProductService {
 
-    getAllProduct() {
-        return ProductSchema.find();
+    getAllProduct(populate: boolean) {
+        const findAllProduct = () => ProductSchema.find();
+        return populate ? findAllProduct().populate('timeline') : findAllProduct();
     }
 
-    getProductById(productId: string) {
-        return ProductSchema.findById(productId);
+    getProductById(productId: string, populate: boolean) {
+        const findProductById = () => ProductSchema.findById(productId);
+        return populate ? findProductById().populate('timeline') : findProductById();
     }
 
     createProduct(product: Product) {

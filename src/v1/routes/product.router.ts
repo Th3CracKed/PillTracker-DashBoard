@@ -8,14 +8,15 @@ const router = express.Router();
 /**
  * Get All Products
  */
-router.get('',
+router.get('', [check('populate').optional().isBoolean()],
     validateFn(productController.getAllProduct));
 
 /**
  * Get product by id
  */
 router.get('/:id',
-    [check('id').exists().trim()],
+    [check('id').exists().trim(),
+    check('populate').optional().isBoolean()],
     validateFn(productController.getProductById));
 
 /**
