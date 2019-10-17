@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { matchedData } from 'express-validator';
-import UserSchema from '../models/user.model';
 import { User } from '../models/user.model';
 import { isTrueBool } from '../../utils';
 import { userService } from '../services/user.service';

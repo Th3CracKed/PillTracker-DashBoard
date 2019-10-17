@@ -4,12 +4,18 @@ import { Order } from '../models';
 
 export class OrderService {
 
-    getAllOrder() {
-        return OrderSchema.find();
+    getAllOrder(populate: boolean) {
+        const findAllOrder = () => OrderSchema.find();
+        return populate ?
+        findAllOrder().populate({ path: 'productOrder.product', model: 'Product'} )
+        : findAllOrder();
     }
 
-    getOrderById(orderId: string) {
-        return OrderSchema.findById(orderId);
+    getOrderById(orderId: string, populate: boolean) {
+        const findAllOrder = () => OrderSchema.findById(orderId);
+        return populate ?
+        findAllOrder().populate({ path: 'productOrder.product', model: 'Product'} )
+        : findAllOrder();
     }
 
     async createOrder(order: Order) {

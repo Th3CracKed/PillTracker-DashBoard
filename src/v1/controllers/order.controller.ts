@@ -2,18 +2,21 @@ import { Request, Response } from 'express';
 import { matchedData } from 'express-validator';
 import { Order } from '../models';
 import { orderService } from '../services';
+import { isTrueBool } from '../../utils';
 
 export class OrderController {
 
     getAllOrder(req: Request, res: Response) {
-        orderService.getAllOrder()
+        const populate: string = matchedData(req).populate;
+        orderService.getAllOrder(isTrueBool(populate))
         .then((orders) => res.json(orders))
         .catch(err => res.status(404).json(err));
     }
 
     getOrderById(req: Request, res: Response) {
         const orderId: string = matchedData(req).id;
-        orderService.getOrderById(orderId)
+        const populate: string = matchedData(req).populate;
+        orderService.getOrderById(orderId, isTrueBool(populate))
         .then(order => res.json(order))
         .catch(err => res.status(404).json(err));
     }

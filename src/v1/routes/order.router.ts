@@ -9,13 +9,15 @@ const router = express.Router();
  * Get All Orders
  */
 router.get('',
+    [check('populate').optional().isBoolean()],
     validateFn(orderController.getAllOrder));
 
 /**
  * Get order by id
  */
 router.get('/:id',
-    [check('id').exists().trim()],
+    [check('id').exists().trim(),
+    check('populate').optional().isBoolean()],
     validateFn(orderController.getOrderById));
 
 /**

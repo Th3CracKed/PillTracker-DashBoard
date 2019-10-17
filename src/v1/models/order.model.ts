@@ -9,13 +9,13 @@ const ProductOrderSchema = new mongoose.Schema(
       required: true,
       default: 1
     },
-    productId: { type: ObjectId, ref: 'Product' }
+    product: { type: ObjectId, ref: 'Product', unique: true }
   }
 );
 
 interface ProductOrder {
   quantity: Number;
-  productId: ObjectId | string;
+  product: ObjectId | string;
 }
 
 export interface Order {
@@ -43,10 +43,6 @@ const OrderSchema = new mongoose.Schema(
   }
 );
 
-OrderSchema.post('remove', function () {
-  productOrder.remove({ orderId: this._id }).exec();
-});
-
 export let productOrderJsonSchema: Schema = {
   id: '/ProductOrderJsonSchema',
   type: 'object',
@@ -54,11 +50,11 @@ export let productOrderJsonSchema: Schema = {
     quantity: {
       type: 'number'
     },
-    productId: {
+    product: {
       type: 'string'
     }
   },
-  required: ['quantity', 'productId'],
+  required: ['quantity', 'product'],
   additionalProperties: false
 };
 
@@ -85,5 +81,4 @@ export let orderJsonSchema: Schema = {
   additionalProperties: false
 };
 
-export const productOrder = mongoose.model('ProductOrder', ProductOrderSchema);
 export default mongoose.model('Order', OrderSchema);
