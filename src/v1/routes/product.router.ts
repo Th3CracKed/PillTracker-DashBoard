@@ -1,8 +1,8 @@
 import * as express from 'express';
-import { productController } from '../controllers/product.controller';
+import { productController } from '../controllers';
 import { body, check } from 'express-validator';
 import { isJsonValid, validateFn } from '../../utils';
-import { productJsonSchema } from '../models/product.model';
+import { productJsonSchema } from '../models';
 const router = express.Router();
 
 /**

@@ -1,10 +1,12 @@
 import * as mongoose from 'mongoose';
 import { Schema } from 'jsonschema';
+import { ObjectId } from 'mongodb';
 
 export interface Product {
   productName: string;
   series: string;
   description?: string;
+  timeline?: ObjectId | string;
 }
 
 const ProductSchema = new mongoose.Schema(
@@ -19,6 +21,10 @@ const ProductSchema = new mongoose.Schema(
     },
     description: {
       type: String
+    },
+    timeline: {
+      type: ObjectId,
+      ref: 'Timeline'
     }
   },
   {
