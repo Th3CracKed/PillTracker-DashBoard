@@ -1,21 +1,22 @@
 import * as express from 'express';
-import { productController } from '../controllers/product.controller';
+import { productController } from '../controllers';
 import { body, check } from 'express-validator';
 import { isJsonValid, validateFn } from '../../utils';
-import { productJsonSchema } from '../models/product.model';
+import { productJsonSchema } from '../models';
 const router = express.Router();
 
 /**
  * Get All Products
  */
-router.get('',
+router.get('', [check('populate').optional().isBoolean()],
     validateFn(productController.getAllProduct));
 
 /**
  * Get product by id
  */
 router.get('/:id',
-    [check('id').exists().trim()],
+    [check('id').exists().trim(),
+    check('populate').optional().isBoolean()],
     validateFn(productController.getProductById));
 
 /**

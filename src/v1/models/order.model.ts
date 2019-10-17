@@ -9,7 +9,7 @@ const ProductOrderSchema = new mongoose.Schema(
       required: true,
       default: 1
     },
-    product: { type: ObjectId, ref: 'Product', unique: true }
+    product: { type: ObjectId, ref: 'Product' }
   }
 );
 

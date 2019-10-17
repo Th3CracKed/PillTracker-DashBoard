@@ -68,7 +68,7 @@ export let userJsonSchema: Schema = {
   additionalProperties: false
 };
 
-export let requiredForCreation: Schema = {
+export let UserRequired: Schema = {
   id: '/UserJsonSchemaRequired',
   required: ['firstName', 'lastName']
 };

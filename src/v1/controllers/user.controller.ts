@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import { matchedData } from 'express-validator';
-import { User } from '../models/user.model';
+import { User } from '../models';
 import { isTrueBool } from '../../utils';
-import { userService } from '../services/user.service';
+import { userService } from '../services';
 
 export class UserController {
 

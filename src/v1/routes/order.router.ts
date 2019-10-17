@@ -2,7 +2,7 @@ import * as express from 'express';
 import { orderController } from '../controllers/order.controller';
 import { body, check } from 'express-validator';
 import { isJsonValid, validateFn } from '../../utils';
-import { orderJsonSchema, productOrderJsonSchema } from '../models/order.model';
+import { orderJsonSchema, productOrderJsonSchema } from '../models';
 const router = express.Router();
 
 /**

@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import { userController } from '../controllers/user.controller';
 import { body, check, sanitize } from 'express-validator';
 import { isJsonValid, validateFn } from '../../utils';
-import { userJsonSchema , requiredForCreation } from '../models/user.model';
+import { userJsonSchema, UserRequired } from '../models';
 const router = express.Router();
 
 /**
@@ -31,7 +31,7 @@ router.get('/:id',
  */
 router.post('',
     [body()
-        .custom(isJsonValid(userJsonSchema, requiredForCreation)),
+        .custom(isJsonValid(userJsonSchema, UserRequired)),
     check('email', 'Please enter a valid email address.').trim().isEmail(),
     // eslint-disable-next-line @typescript-eslint/camelcase
     sanitize('email').normalizeEmail({ gmail_remove_dots: true })],
