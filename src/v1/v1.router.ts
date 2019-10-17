@@ -1,11 +1,11 @@
 import * as express from 'express';
 
-import { userRouter } from './routes/user.router';
-import { orderRouter } from './routes/order.router';
+import { userRouter, orderRouter, productRouter } from './routes';
 
 const app = express();
 
 app.use('/user', userRouter);
 app.use('/order', orderRouter);
+app.use('/product', productRouter);
 
 export { app as v1 };
