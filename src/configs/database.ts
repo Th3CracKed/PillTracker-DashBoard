@@ -1,13 +1,9 @@
 import mongoose = require('mongoose');
-
-const dbConfig = {
-    database: 'mongodb://localhost:27017/meanAuth',
-    secret: 'secretToken'
-};
+import CONFIG from './config';
 
 const connect = () => {
     mongoose
-    .connect(dbConfig.database).then(() => {
+    .connect(CONFIG.DB_HOST).then(() => {
         console.log('Database connection successful');
     })
     .catch(err => {
