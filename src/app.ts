@@ -2,14 +2,13 @@ import * as express from 'express';
 import bodyParser = require('body-parser');
 import winston = require('winston');
 import expressWinston = require('express-winston');
-import { databaseSetup } from './config/database';
+import { databaseSetup } from './configs/database';
 import { v1 } from './v1';
+import CONFIG from './configs/config';
 
 databaseSetup();
 
 const app = express();
-
-const port = 3000;
 
 
 // request and error logging
@@ -46,6 +45,6 @@ app.use(expressWinston.errorLogger({
   )
 }));
 
-app.listen(port, () => {
-  console.log('Server started on server ' + port);
+app.listen(CONFIG.PORT, () => {
+  console.log(`Server started on server ${CONFIG.PORT}`);
 });
