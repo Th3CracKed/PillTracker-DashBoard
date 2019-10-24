@@ -1,4 +1,6 @@
 import * as express from 'express';
+import * as helmet from 'helmet';
+import * as rateLimit from 'express-rate-limit';
 import bodyParser = require('body-parser');
 import winston = require('winston');
 import expressWinston = require('express-winston');
@@ -10,6 +12,17 @@ databaseSetup();
 
 const app = express();
 
+app.use(helmet());
+
+// Enable if you're behind a reverse proxy (Heroku, Bluemix, AWS ELB, Nginx, etc)
+// see https://expressjs.com/en/guide/behind-proxies.html
+// app.set('trust proxy', 1);
+
+//  apply to all requests
+app.use(rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100 // limit each IP to 100 requests per windowMs
+});
 
 // request and error logging
 app.use(expressWinston.logger({
