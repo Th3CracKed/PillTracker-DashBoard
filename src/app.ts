@@ -39,6 +39,7 @@ app.use(expressWinston.logger({
   ignoreRoute: (_req: any, _res: any) => { return false; } // optional: allows to skip some log messages based on request and/or response
 }));
 
+app.disable('x-powered-by');
 
 // extract the entire body portion of an incoming request stream and exposes it on req.body
 app.use(bodyParser.json());
