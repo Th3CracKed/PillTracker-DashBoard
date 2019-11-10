@@ -56,7 +56,7 @@ router.put('/:id',
  * Delete Timeline
  */
 router.delete('/:id',
-    check('id').exists().trim(),
+    [check('id').exists().trim()],
     validateFn(timelineController.deleteTimelineById));
 
 export { router as timelineRouter };

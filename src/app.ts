@@ -1,14 +1,26 @@
+/**
+ * Required External Modules
+ */
 import * as express from 'express';
 import * as helmet from 'helmet';
 import * as rateLimit from 'express-rate-limit';
+import * as cors from 'cors';
 import bodyParser = require('body-parser');
 import winston = require('winston');
 import expressWinston = require('express-winston');
-import { databaseSetup } from './configs/database';
+/**
+ * Required Internal Modules
+ */
+import { databaseSetup, checkJwt, isEnvSetup, isAdmin, codeFlowWithPCKE } from './configs';
 import { v1 } from './v1';
 import CONFIG from './configs/config';
 
 databaseSetup();
+isEnvSetup();
+
+/**
+ * App Variables
+ */
 
 const app = express();
 
@@ -22,7 +34,9 @@ app.use(helmet());
 app.use(rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100 // limit each IP to 100 requests per windowMs
-});
+}));
+
+app.use(cors());
 
 // request and error logging
 app.use(expressWinston.logger({
@@ -47,8 +61,13 @@ app.use(bodyParser.json());
 app.get('/', (_req: any, res: any) => {
   res.send('Home');
 });
+app.get('/auth0', (_req: any, res: any) => {
+  res.send(codeFlowWithPCKE());
+});
 
-app.use('/api/1', v1);
+app.use('/api/1',
+  [checkJwt, isAdmin],
+  v1);
 
 app.use(expressWinston.errorLogger({
   transports: [
