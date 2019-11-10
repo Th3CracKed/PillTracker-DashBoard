@@ -22,8 +22,8 @@ router.get('/:id',
 /**
  * Create Product
  */
-router.post('', [
-    body()
+router.post('',
+    [body()
         .custom(isJsonValid(productJsonSchema))],
     validateFn(productController.createProduct));
 
@@ -31,7 +31,7 @@ router.post('', [
  * Update Product (replace)
  */
 router.put('/:id',
-    [check('id').exists().trim(),
+    [    check('id').exists().trim(),
     body().custom(isJsonValid(productJsonSchema))],
     validateFn(productController.updateProductById));
 
@@ -39,7 +39,7 @@ router.put('/:id',
  * Delete Product
  */
 router.delete('/:id',
-    check('id').exists().trim(),
+    [check('id').exists().trim()],
     validateFn(productController.deleteProductById));
 
 export { router as productRouter };

@@ -73,7 +73,7 @@ router.put('/:id',
  * Delete User
  */
 router.delete('/:id',
-    check('id').exists().trim(),
+    [check('id').exists().trim()],
     validateFn(userController.deleteUserById));
 
 export { router as userRouter };

@@ -23,8 +23,8 @@ router.get('/:id',
 /**
  * Create Order
  */
-router.post('', [
-    body()
+router.post('',
+    [body()
         .custom(isJsonValid(orderJsonSchema, productOrderJsonSchema))],
     validateFn(orderController.createOrder));
 
@@ -40,7 +40,7 @@ router.put('/:id',
  * Delete Order
  */
 router.delete('/:id',
-    check('id').exists().trim(),
+    [check('id').exists().trim()],
     validateFn(orderController.deleteOrderById));
 
 export { router as orderRouter };
